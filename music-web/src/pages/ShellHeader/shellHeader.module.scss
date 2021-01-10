@@ -1,0 +1,147 @@
+.headerTop {
+  background-color: #242424;
+  height: 70px;
+  box-sizing: border-box;
+  background: #242424;
+  border-bottom: 1px solid #000;
+  .headerWrap {
+    margin: 0 auto;
+    width: 1100px;
+    display: flex;
+    // justify-content: space-between;
+    align-items: center;
+    height: 100%;
+
+    .headerText {
+      font-size: 27px;
+      padding-left: 20px;
+      padding-bottom: 5px;
+      color: #cdc9c9;
+      padding-right: 20px;
+      display: inline-block;
+    }
+
+    .headerMenu {
+      display: flex;
+      color: #cdc9c9;
+      height: 100%;
+      padding-right: 30px;
+
+      .headerMenuItem {
+        position: relative;
+        height: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+        display: flex;
+        align-items: center;
+        &:hover {
+          background-color: #000;
+          color: white;
+          cursor: pointer;
+        }
+
+        .selectedTri {
+          position: absolute;
+          bottom: -2px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 0;
+          height: 0;
+          border-left: 8px solid transparent;
+          border-right: 8px solid transparent;
+          border-bottom: 8px solid red;
+        }
+      }
+      .headerMenuItemSelected {
+        background-color: #000;
+        color: white;
+      }
+    }
+
+    .headerSearch {
+      label:before {
+        content: "\f002";
+        font-family: "FontAwesome" !important;
+        position: absolute;
+        padding: 7px;
+        color: gray;
+      }
+
+      .headerInput {
+        height: 30px;
+        border-radius: 25px;
+        border: 0px;
+        padding-left: 30px;
+        background-color: #fbfbfb;
+        &:focus {
+          outline: 0;
+        }
+      }
+
+      .dropDownWrap {
+        position: absolute;
+        color: gray;
+        background-color: #fbfbfb;
+        margin-top: 5px;
+        width: 230px;
+        border-radius: 3px;
+        font-size: 12px;
+
+        .dropDownContentHeader {
+          padding: 6px 10px;
+          border-bottom: 1px solid #d0cccc;
+        }
+
+        .dropDownContentWrap {
+          color: #2f2828;
+          .dropDownContent {
+            display: flex;
+            .dropDownContentLeft {
+              padding: 8px 3px;
+              border-right: 1px solid #d0cccc;
+              width: 55px;
+            }
+
+            .dropDownContentRight {
+              padding: 5px 0px;
+              width: 195px;
+              border-top: 1px solid #d0cccc;
+              line-height: 23px;
+              margin: 0;
+
+              li {
+                list-style-type: none;
+                text-overflow: ellipsis;
+                width: 165px;
+                overflow: hidden;
+                white-space: nowrap;
+                padding-left: 10px;
+                &:hover {
+                  background-color: #ececec;
+                }
+              }
+            }
+
+            .dropDownContentRightTop {
+              border-top: 0px !important;
+            }
+          }
+        }
+      }
+    }
+
+    .loginText {
+      margin-left: 100px;
+      color: #787878;
+      text-decoration: none;
+      font-size: 14px;
+      &:hover {
+        color: #999;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+

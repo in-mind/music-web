@@ -1,0 +1,131 @@
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+
+  .btn {
+    width: 224px;
+    height: 31px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+
+  .login-btn {
+    background-color: #3ea1ce;
+    margin-top: 20px;
+    border: 1px solid #2298ce;
+    color: white;
+    &:hover {
+      background-color: #42b6ea;
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .register-btn {
+    background-color: "#d8d0d0";
+    margin-top: 10px;
+    border: 1px solid #bfbcbc;
+    &:hover {
+      background-color: #e4e4e4;
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+  .treatyStyle {
+    font-size: 12px;
+    margin-top: 20px;
+    input {
+      margin: 0 5px;
+    }
+    a {
+      text-decoration: none;
+      color: #1787e0;
+    }
+  }
+}
+
+.modal-content-phone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #666;
+  input {
+    height: 25px;
+    width: 205px;
+    border-radius: 4px;
+    border: 1px solid #bfbcbc;
+    color: #666;
+    padding-left: 20px;
+    font-size: 12px;
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .phone-input {
+    margin-top: 20px;
+  }
+
+  .pwd-input {
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  .btn {
+    width: 225px;
+    height: 31px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 13px;
+  }
+
+  .login-btn {
+    margin-top: 15px;
+    background-color: #3ea1ce;
+    border: 1px solid #2298ce;
+    color: white;
+    &:hover {
+      background-color: #42b6ea;
+    }
+    &:focus {
+      outline: 0;
+    }
+  }
+
+  .pwd-text {
+    width: 225px;
+    font-size: 12px;
+    display: flex;
+    padding: 0px 10px;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+
+  .phone-input-wrap {
+    label:before {
+      content: "\f10b";
+      font-family: "FontAwesome" !important;
+      position: absolute;
+      padding: 25px 5px;
+      color: gray;
+      font-size: 19px;
+    }
+  }
+
+  .pwd-input-wrap {
+    label:before {
+      content: "\f023";
+      font-family: "FontAwesome" !important;
+      position: absolute;
+      padding: 16px 5px;
+      color: gray;
+    }
+  }
+}
