@@ -4,9 +4,12 @@ import logo from '../../../public/logo.png';
 import classNames from 'classnames';
 import { useHistory, withRouter } from 'react-router-dom';
 import { FetchData } from '../../utils/service';
-import Modal from '../../utils/Modal/Modal';
 import platForm from '../../../public/platform.png';
 import './modal.scss';
+import { Dialog, DialogTitle, Button, DialogActions, DialogContent, DialogContentText } from '@material-ui/core';
+import Draggable from 'react-draggable';
+import Paper, { PaperProps } from '@material-ui/core/Paper';
+import md5 from 'js-md5';
 
 interface IMenu {
   item: string,
@@ -25,12 +28,17 @@ const suggestMap: any = {
   playlists: ['歌单', 'fa-assistive-listening-systems'],
 }
 
+function PaperComponent(props: PaperProps) {
+  return (
+    <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+      <Paper {...props} />
+    </Draggable>
+  )
+}
+
 function ShellHeader() {
 
   const history = useHistory();
-  const treatyCheckedEl: any = useRef(null);
-  const inputPhoneEl: any = useRef(null);
-  const inputPwdEl: any = useRef(null);
   const [selectedIndex, setselectedIndex] = useState(0);
   const [dropDownExpand, setDropDownExpand] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -39,8 +47,7 @@ function ShellHeader() {
   const [showPhoneLoginModal, setShowPhoneLoginModal] = useState(false);
   const [phoneValue, setPhoneValue] = useState('');
   const [pwdValue, setPwdValue] = useState('');
-  const loginTitle = '登录';
-  let treatyChecked = false;
+  const [officialTermsChecked, setOfficialTermsChecked] = useState(false);
 
   const searchChange = async function (e: React.ChangeEvent<HTMLInputElement>) {
     const searchValue = e.target.value;
@@ -85,29 +92,14 @@ function ShellHeader() {
     searchValue && setDropDownExpand(true)
   }
 
-  const goToPhoneLoginModal = function () {
-    treatyChecked = treatyCheckedEl.current.checked;
-    if (treatyChecked) {
-      setShowLoginModal(false);
-      setShowPhoneLoginModal(true);
-
+  const login = async function () {
+    if(phoneValue && pwdValue) {
+      const md5PwdValue = md5(pwdValue);
+      console.log(md5PwdValue)
+      const res: any = await FetchData(`http://localhost:3000/login/cellphone?phone=${phoneValue}&md5_password=${md5PwdValue}`, 'GET');
+      console.log(res)
     }
   }
-
-  useEffect(() => {
-    if(inputPhoneEl.current && !inputPhoneEl.current.value) {
-      inputPhoneEl.current.style.border='1px solid red';
-    } else {
-
-    }
-  }, [inputPhoneEl])
-
-  const login = function() {
-    console.log(inputPhoneEl.current.value);
-    console.log(inputPwdEl.current.value)
-
-  }
-  console.log('init')
 
   return (
     <div className={styles.headerTop}>
@@ -177,8 +169,67 @@ function ShellHeader() {
         </div>
 
         <div className={styles.loginText} onClick={() => { setShowLoginModal(true) }}>登录 </div>
-        <Modal
-          visible={showLoginModal}
+
+        <Dialog
+          open={showLoginModal}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title" disableTypography={false}>
+            <div>登录</div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <div>
+                <img src={platForm} alt="platform" />
+                <button className="btn login-btn" onClick={() => { officialTermsChecked && setShowPhoneLoginModal(true) }}> 手机号登录</button>
+                <button className="btn register-btn">注&nbsp;册</button>
+                <div className="treatyStyle">
+                  <input type="checkbox" checked={officialTermsChecked} onChange={() => { setOfficialTermsChecked(!officialTermsChecked) }} />
+                  同意
+                  <a href="https://st.music.163.com/official-terms/service">《服务条款》</a>
+                  <a href="https://st.music.163.com/official-terms/privacy">《隐私政策》</a>
+                  <a href="https://st.music.163.com/official-terms/children">《儿童隐私政策》</a>
+                </div>
+              </div>
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => { setShowLoginModal(false) }}>
+              cancel
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Dialog
+          open={showPhoneLoginModal}
+          PaperComponent={PaperComponent}
+          aria-labelledby="draggable-dialog-title"
+        >
+          <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title" disableTypography={false}>
+            <div>手机号登录</div>
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              <div className="modal-content-phone">
+                <div className="phone-input-wrap">
+                  <label htmlFor="PhoneInput"></label>
+                  <input id="PhoneInput" className="phone-input" type="text" placeholder="请输入手机号"  onChange={(e) => { setPhoneValue(e.target.value) }} />
+                </div>
+                <div className="pwd-input-wrap">
+                  <label htmlFor="PwdInput"></label>
+                  <input id="PwdInput" className="pwd-input" type="password" placeholder="请输入密码" onChange={(e) => { setPwdValue(e.target.value) }} />
+                </div>
+                <div className="pwd-text"><div>自动登录</div> <div>忘记密码</div></div>
+                <button className="btn login-btn" onClick={() => { login() }}>登&nbsp;录</button>
+              </div>
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
+
+
+
+        {/* <Modal
+          visible={false}
           onConfirm={onConfirm}
           onCancle={onCancel}
           title={loginTitle}
@@ -195,8 +246,8 @@ function ShellHeader() {
               <a href="https://st.music.163.com/official-terms/children">《儿童隐私政策》</a>
             </div>
           </div>
-        </Modal>
-        <Modal
+        </Modal> */}
+        {/* <Modal
           visible={false}
           onConfirm={onConfirm}
           onCancle={onCancel}
@@ -215,7 +266,7 @@ function ShellHeader() {
             <button className="btn login-btn" onClick={() => {login()}}>登&nbsp;录</button>
 
           </div>
-        </Modal>
+        </Modal> */}
       </div>
     </div>
   )
